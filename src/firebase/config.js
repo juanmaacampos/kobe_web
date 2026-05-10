@@ -6,16 +6,16 @@
 export const MENU_CONFIG = {
   //Configuración de Firebase
   firebaseConfig: {
-    apiKey: "AIzaSyDHi_a1trI35goPoKcNPUDBMOSLKjvZKyc",
-    authDomain: "cms-menu-7b4a4.firebaseapp.com",
-    projectId: "cms-menu-7b4a4",
-    storageBucket: "cms-menu-7b4a4.firebasestorage.app",
-    messagingSenderId: "509736809578",
-    appId: "1:509736809578:web:15471af092f3b46392c613"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
   },
 
   //ID del Negocio Principal - Groove
-  businessId: "gACmubov5OQONvnLyJrrbX6qR7e2",
+  businessId: import.meta.env.VITE_FIREBASE_BUSINESS_ID,
   
   // Configuración para Múltiples Menús
   multipleMenus: {
