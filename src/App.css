@@ -1,0 +1,65 @@
+/* Design tokens — Kobe Sushi */
+:root {
+	--color-accent: #FACC15;
+	--color-accent-hover: #991B1B;
+	--color-bg: #18181B;
+	--color-text: #F9FAFB;
+	--surface-card: rgba(24, 24, 27, 0.82);
+	--surface-soft: rgba(250, 204, 21, 0.04);
+	--surface-border: rgba(250, 204, 21, 0.14);
+	--text-muted: rgba(249, 250, 251, 0.72);
+	--font-heading: 'PPEiko', 'PP Eiko', serif;
+	--font-body: 'Montserrat', sans-serif;
+}
+
+/* Font faces */
+@font-face { font-family: 'PPEiko'; src: url('./assets/fonts/PP Eiko/PPEiko-Medium.otf') format('opentype'); font-weight:500; font-style:normal; font-display: swap; }
+@font-face { font-family: 'PPEiko'; src: url('./assets/fonts/PP Eiko/PPEiko-LightItalic.otf') format('opentype'); font-weight:300; font-style:italic; font-display: swap; }
+@font-face { font-family: 'PPEiko'; src: url('./assets/fonts/PP Eiko/PPEiko-Heavy.otf') format('opentype'); font-weight:700; font-style:normal; font-display: swap; }
+@font-face { font-family: 'PPEiko'; src: url('./assets/fonts/PP Eiko/PPEiko-Thin.otf') format('opentype'); font-weight:200; font-style:normal; font-display: swap; }
+
+@font-face { font-family: 'Montserrat'; src: url('./assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Montserrat'; src: url('./assets/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; font-style: italic; font-display: swap; }
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin:0; font-family: var(--font-body); background: var(--color-bg); color: var(--color-text); -webkit-font-smoothing: antialiased; }
+img { max-width:100%; display:block; }
+button { font: inherit; }
+::-moz-selection { background: var(--color-accent); color: var(--color-bg); }
+::selection { background: var(--color-accent); color: var(--color-bg); }
+
+.app-shell {
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+.web-test-badge {
+	position: fixed;
+	top: 12px;
+	right: 12px;
+	z-index: 80;
+	pointer-events: none;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 0.72rem;
+	letter-spacing: 0.04em;
+	font-weight: 600;
+	background: var(--surface-soft);
+	border: 1px solid var(--surface-border);
+	color: var(--text-muted);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+
+@media (max-width: 640px) {
+	.web-test-badge {
+		top: 10px;
+		right: 10px;
+		font-size: 0.68rem;
+		padding: 3px 8px;
+	}
+}
+
+/* Utility container if needed later */
+.container { width:100%; max-width:1200px; margin:0 auto; padding:0 1rem; }

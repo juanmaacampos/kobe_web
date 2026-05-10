@@ -1,0 +1,261 @@
+.highlights-grid { 
+	position: relative; 
+	padding: clamp(1.5rem, 4vw, 2rem) 0 clamp(2.5rem, 6vw, 3rem); 
+	background: var(--color-bg); 
+	color: var(--color-text); 
+	width: 100%; 
+	margin: 0;
+	display: block;
+}
+.highlights-grid__inner { 
+	width: 100%; 
+	max-width: 1200px; 
+	margin: 0 auto; 
+	padding: 0 1rem; 
+	box-sizing: border-box; 
+	display: block;
+	position: relative;
+}
+
+/* Mejorar el espaciado general en desktop */
+@media (min-width: 1024px) {
+	.highlights-grid {
+		padding: clamp(2rem, 5vw, 4rem) 0 clamp(3rem, 7vw, 5rem);
+		background: var(--color-bg);
+		position: relative;
+	}
+	
+	.highlights-grid__inner {
+		max-width: 1400px;
+		padding: 0 2rem;
+		position: relative;
+		z-index: 1;
+	}
+	
+	/* Agregar un sutil efecto de fondo para desktop */
+	.highlights-grid::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: radial-gradient(ellipse at center, rgba(255, 192, 123, 0.03) 0%, transparent 70%);
+		pointer-events: none;
+		z-index: 0;
+	}
+}
+
+/* Optional section title (hidden for now) */
+.highlights-grid__title { display:none; }
+
+/* spacing from header */
+.highlights-grid { margin-top: clamp(1rem, 3vw, 1.5rem); }
+
+/* Layout vertical simple - cards una abajo de la otra (mobile first) */
+.stack { 
+	display: flex;
+	flex-direction: column;
+	gap: 2rem; /* Espacio entre cards */
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.stack-item { 
+	position: relative; 
+	width: 100%;
+	opacity: 1;
+	transform: none;
+	margin: 0;
+	z-index: auto;
+}
+
+.stack-item.is-first,
+.stack-item.is-second,
+.stack-item.is-third { 
+	margin-top: 0;
+	transform: none;
+	opacity: 1;
+	z-index: auto;
+	transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hover effect para interactividad */
+.stack-item:hover {
+	transform: translateY(-4px);
+	transition: transform 0.3s ease;
+}
+
+/* Animación suave para aparición de anuncios dinámicos */
+.stack-item.is-first {
+	animation: fadeInSlide 0.6s ease-out;
+}
+
+@keyframes fadeInSlide {
+	from {
+		opacity: 0;
+		transform: translateY(20px) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+/* Responsive spacing */
+@media (min-width: 768px) {
+	.stack {
+		gap: 2.5rem;
+		/* Grid simple para tablets */
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: start;
+	}
+	
+	/* Mejor hover para tablets */
+	.stack-item:hover {
+		transform: translateY(-6px);
+	}
+}
+
+@media (min-width: 1024px) {
+	.stack {
+		gap: 3rem;
+		/* Grid de 3 columnas para desktop */
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		max-width: none;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		justify-items: center;
+		align-items: start;
+	}
+	
+	.stack-item {
+		width: 100%;
+		max-width: none;
+	}
+	
+	/* Hacer que las cards ocupen todo el ancho disponible en desktop */
+	.stack-item .premium-card {
+		max-width: none;
+		width: 100%;
+	}
+	
+	/* Animaciones más sofisticadas en desktop */
+	.stack-item {
+		transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+					box-shadow 0.4s ease;
+	}
+	
+	.stack-item:hover {
+		transform: translateY(-8px) scale(1.02);
+		filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15));
+	}
+	
+	/* Stagger animation para desktop */
+	.stack-item.is-first {
+		animation-delay: 0s;
+	}
+	
+	.stack-item.is-second {
+		animation: fadeInSlide 0.6s ease-out 0.2s both;
+	}
+	
+	.stack-item.is-third {
+		animation: fadeInSlide 0.6s ease-out 0.4s both;
+	}
+}
+
+/* Para pantallas muy grandes */
+@media (min-width: 1440px) {
+	.stack {
+		gap: 4rem;
+		/* Mantener 3 columnas en pantallas grandes */
+		grid-template-columns: repeat(3, 1fr);
+	}
+	
+	.highlights-grid__inner {
+		max-width: 1600px;
+		padding: 0 3rem;
+	}
+	
+	.highlights-grid {
+		padding: clamp(2rem, 5vw, 4rem) 0 clamp(3rem, 7vw, 5rem);
+	}
+}
+
+/* Estados de carga para cuando no hay anuncios */
+.highlights-grid.empty-state .stack-item.is-first {
+	animation: none;
+}
+
+/* Indicadores para anuncios múltiples - OCULTOS */
+.announcement-indicators {
+	display: none; /* Ocultamos completamente los indicadores de anuncios */
+}
+
+.announcement-indicators .indicator {
+	display: none;
+}
+
+.announcement-indicators .indicator.active {
+	display: none;
+}
+
+.announcement-indicators .indicator:hover {
+	display: none;
+}
+
+/* Indicadores de imágenes dentro del anuncio - OCULTOS */
+.image-indicators {
+	display: none; /* Ocultamos completamente los indicadores de imágenes */
+}
+
+.image-indicators .image-indicator {
+	display: none;
+}
+
+.image-indicators .image-indicator.active {
+	display: none;
+}
+
+.image-indicators .image-indicator:hover {
+	display: none;
+}
+
+/* Estados de carga y sin anuncios */
+.empty-state-message {
+	background: var(--color-bg-alt, #f8f9fa);
+	border: 2px dashed var(--color-border, #e0e0e0);
+	border-radius: 12px;
+	padding: 2rem;
+	text-align: center;
+	color: var(--color-text-light, #666);
+	font-style: italic;
+}
+
+.grid-loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 3rem;
+	text-align: center;
+}
+
+.grid-loading .loading-spinner {
+	width: 40px;
+	height: 40px;
+	border: 3px solid rgba(255, 192, 123, 0.2);
+	border-top: 3px solid var(--color-accent);
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
