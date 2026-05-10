@@ -22,10 +22,10 @@
   border: 1px solid var(--surface-border, rgba(255,255,255,0.14));
   background: var(--surface-soft, rgba(255,255,255,0.04));
   color: var(--color-accent);
-  border-radius: 999px;
+  border-radius: 0;
   padding: .28rem .75rem;
   font-size: .85rem;
-  font-weight: 600;
+  font-weight: 300;
 }
 
 .event-reservation__intro h2 {
@@ -42,9 +42,9 @@
 }
 
 .event-reservation__card {
-  background: var(--surface-card, rgba(28, 54, 32, 0.75));
+  background: var(--surface-card, rgba(24, 24, 27, 0.75));
   border: 1px solid var(--surface-border, rgba(255,255,255,0.12));
-  border-radius: 18px;
+  border-radius: 0;
   padding: 1.15rem;
 }
 
@@ -61,7 +61,7 @@
 
 .event-form__mode-button {
   min-height: 54px;
-  border-radius: 14px;
+  border-radius: 0;
   border: 1px solid var(--surface-border, rgba(255,255,255,0.2));
   background: color-mix(in srgb, var(--surface-soft, rgba(255,255,255,0.04)) 90%, transparent);
   color: var(--color-text);
@@ -96,7 +96,7 @@
   display: grid;
   gap: .42rem;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .event-form input,
@@ -106,7 +106,7 @@
   border: 1px solid var(--surface-border, rgba(255,255,255,0.22));
   background: var(--surface-soft, rgba(255,255,255,0.04));
   color: var(--color-text);
-  border-radius: 12px;
+  border-radius: 0;
   padding: .86rem .9rem;
   min-height: 48px;
   font-size: 1rem;
@@ -191,11 +191,11 @@
   gap: .45rem;
   width: 100%;
   min-height: 50px;
-  border-radius: 12px;
+  border-radius: 0;
   padding: .85rem 1rem;
   font-size: 1rem;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 300;
   border: 1px solid transparent;
 }
 

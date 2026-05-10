@@ -6,151 +6,172 @@
   right: 0;
   bottom: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  animation: modalFadeIn 0.3s ease-out;
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Modal Content */
 .modal-content {
   position: relative;
-  max-width: 500px;
+  background: var(--color-bg);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0;
   width: 100%;
+  max-width: 500px;
   max-height: 90vh;
-  background: #18181B;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 2px solid rgba(250, 204, 21, 0.5);
-  box-shadow: 0 20px 50px rgba(250, 204, 21, 0.12), 0 8px 25px rgba(0,0,0,.4);
-  animation: modalSlideIn 0.4s ease-out;
   overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-content.image-modal {
+  max-width: 90vw;
+  max-height: 90vh;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 /* Close Button */
 .modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.7);
+  top: 15px;
+  right: 15px;
+  background: transparent;
   border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  border-radius: 0;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FACC15;
   cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(8px);
+  color: var(--color-text);
+  z-index: 10;
+  transition: color 0.3s ease;
 }
 
 .modal-close:hover {
-  background: rgba(0, 0, 0, 0.9);
-  color: #ffffff;
-  transform: scale(1.1);
+  color: var(--color-accent);
 }
 
-.modal-close svg {
-  width: 20px;
-  height: 20px;
+/* Image Modal Specific Styles */
+.image-modal-content {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 90vh;
 }
 
-/* Modal PremiumCard adjustments */
-.modal-content .premium-card {
-  max-width: none;
+.modal-enlarged-image {
+  max-width: 100%;
+  max-height: calc(90vh - 120px);
+  object-fit: contain;
+  display: block;
+}
+
+.image-modal-info {
+  padding: 20px;
+  background: var(--color-bg);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+
+.modal-item-name {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  margin: 0 0 5px 0;
+}
+
+.modal-item-price {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin: 0 0 10px 0;
+}
+
+.modal-item-desc {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
   margin: 0;
-  border: none;
-  border-radius: 20px;
-  box-shadow: none;
-}
-
-.modal-content .premium-card__media {
-  border-radius: 20px 20px 0 0;
-}
-
-.modal-content .premium-card__cta {
-  margin-bottom: 0;
+  line-height: 1.5;
 }
 
 /* Animations */
 @keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
   from {
     opacity: 0;
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Mobile responsive */
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .modal-backdrop {
-    padding: 10px;
+    padding: 15px;
   }
   
-  .modal-content {
-    max-width: 95vw;
-    border-radius: 16px;
+  .image-modal-content {
+    width: 100%;
   }
   
-  .modal-content .premium-card {
-    border-radius: 16px;
-  }
-  
-  .modal-content .premium-card__media {
-    border-radius: 16px 16px 0 0;
-    height: 200px;
-  }
-  
-  .modal-close {
-    top: 12px;
-    right: 12px;
-    width: 32px;
-    height: 32px;
-  }
-  
-  .modal-close svg {
-    width: 18px;
-    height: 18px;
+  .modal-enlarged-image {
+    max-height: calc(90vh - 140px);
   }
 }
 
-/* Smooth scrolling for modal content */
-.modal-content {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(250, 204, 21, 0.3) transparent;
+/* Skeleton Loading in Modal */
+.image-modal-skeleton {
+  width: 80vw;
+  height: 60vh;
+  max-width: 600px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.modal-content::-webkit-scrollbar {
-  width: 6px;
+.image-modal-skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  animation: modal-shimmer 1.5s infinite;
 }
 
-.modal-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background: rgba(250, 204, 21, 0.3);
-  border-radius: 3px;
-}
-
-.modal-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(250, 204, 21, 0.5);
+@keyframes modal-shimmer {
+  100% { left: 100%; }
 }

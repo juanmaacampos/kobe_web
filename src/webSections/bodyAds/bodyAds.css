@@ -230,7 +230,7 @@
 .empty-state-message {
 	background: var(--color-bg-alt, #f8f9fa);
 	border: 2px dashed var(--color-border, #e0e0e0);
-	border-radius: 12px;
+	border-radius: 0;
 	padding: 2rem;
 	text-align: center;
 	color: var(--color-text-light, #666);
@@ -251,7 +251,7 @@
 	height: 40px;
 	border: 3px solid rgba(255, 192, 123, 0.2);
 	border-top: 3px solid var(--color-accent);
-	border-radius: 50%;
+	border-radius: 0;
 	animation: spin 1s linear infinite;
 }
 

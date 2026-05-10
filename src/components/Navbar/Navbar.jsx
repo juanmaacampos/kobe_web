@@ -7,7 +7,6 @@ import './navbar.css';
 const NAV_ITEMS = [
   { label: 'Menú',               target: null,         Icon: MdMenuBook },
   { label: 'Novedades',          target: '#nosotros',  Icon: MdCampaign },
-  { label: 'Reseñas',            target: '#resenas',   Icon: FaGoogle },
   { label: 'Reservas',           target: '#reservas',  Icon: MdEventAvailable },
   { label: 'Acerca de nosotros', target: '#info',      Icon: MdInfoOutline },
 ];

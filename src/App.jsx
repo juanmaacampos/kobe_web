@@ -5,7 +5,6 @@ import MenuDropdownOptimized from './components/MenuDropdownOptimized/MenuDropdo
 import BodyAds from './webSections/bodyAds/BodyAds.jsx';
 import Footer from './webSections/Footer/Footer.jsx';
 import Info from './webSections/Info/Info.jsx';
-import Reviews from './webSections/Reviews/Reviews.jsx';
 import EventReservation from './webSections/EventReservation/EventReservation.jsx';
 import FirebaseProvider from './firebase/FirebaseProvider.jsx';
 import FeaturedModal from './components/FeaturedModal/FeaturedModal.jsx';
@@ -66,7 +65,6 @@ function AppContent({ onSelectMenu, selectedMenu, onSlideChange, activeSlide, ma
         />
       )}
       <BodyAds />
-      <Reviews />
       <EventReservation />
       <Info businessHours={business?.businessHours} />
       <Footer />

@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
-import { FaGoogle } from 'react-icons/fa';
-import { MdMenuBook, MdCampaign, MdEventAvailable, MdInfoOutline } from 'react-icons/md';
+import { MdOutlineRestaurantMenu, MdOutlineNotifications, MdOutlineStarBorder, MdOutlineCalendarToday, MdOutlineInfo } from 'react-icons/md';
 import GrooveLogo from '../../assets/img/kobe_logo_white.webp';
 import HeaderBg from '../headerBg/HeaderBg.jsx';
 import './landingModal.css';
 
 const NAV_ITEMS = [
-  { label: 'Menú',               target: null,         Icon: MdMenuBook },
-  { label: 'Novedades',          target: '#nosotros',  Icon: MdCampaign },
-  { label: 'Reseñas',            target: '#resenas',   Icon: FaGoogle },
-  { label: 'Reservas',           target: '#reservas',  Icon: MdEventAvailable },
-  { label: 'Acerca de nosotros', target: '#info',      Icon: MdInfoOutline },
+  { label: 'El Menú',            target: null,         icon: <MdOutlineRestaurantMenu /> },
+  { label: 'Novedades',          target: '#nosotros',  icon: <MdOutlineNotifications /> },
+  { label: 'Reservaciones',      target: '#reservas',  icon: <MdOutlineCalendarToday /> },
+  { label: 'Sobre Nosotros',     target: '#info',      icon: <MdOutlineInfo /> },
 ];
 
 const LandingModal = ({ open, onClose }) => {
@@ -31,7 +29,6 @@ const LandingModal = ({ open, onClose }) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
-    // Delay slightly so the modal unmounts before scroll fires
     requestAnimationFrame(() => {
       const el = document.querySelector(target);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -39,20 +36,21 @@ const LandingModal = ({ open, onClose }) => {
   };
 
   return (
-    <div className="landing-modal" role="dialog" aria-modal="true" aria-label="Menú de navegación">
+    <div className="landing-modal" role="dialog" aria-modal="true" aria-label="Menú de inicio">
       <HeaderBg />
       <div className="landing-modal__inner">
         <img src={GrooveLogo} alt="Kobe Sushi" className="landing-modal__logo" />
+        
         <nav className="landing-modal__nav" aria-label="Secciones principales">
-          {NAV_ITEMS.map(({ label, target, Icon }) => (
+          {NAV_ITEMS.map(({ label, target, icon }) => (
             <button
               key={label}
-              className="landing-modal__btn"
+              className="landing-list-item"
               onClick={() => handleClick(target)}
               type="button"
             >
-              <Icon className="landing-modal__btn-icon" aria-hidden="true" />
-              <span>{label}</span>
+              <span className="landing-list-icon">{icon}</span>
+              <span className="landing-list-title">{label}</span>
             </button>
           ))}
         </nav>
@@ -60,5 +58,4 @@ const LandingModal = ({ open, onClose }) => {
     </div>
   );
 };
-
 export default LandingModal;

@@ -3,22 +3,21 @@
   bottom: 2rem;
   right: 2rem;
   z-index: 999;
-  background-color: rgba(31, 51, 44, 0.7); /* Semi-transparent primary-green instead of accent */
-  color: #ffffff; /* White text/icon for better contrast */
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  background-color: rgba(24, 24, 27, 0.95);
+  color: var(--color-accent);
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 2px solid var(--color-accent); /* Add a gold border */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.3s ease;
-  backdrop-filter: blur(3px); /* Glass effect */
-  -webkit-backdrop-filter: blur(3px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .top-button.visible {
@@ -27,16 +26,16 @@
 }
 
 .top-button:hover {
-  background-color: var(--color-primary-green); /* Solid color on hover */
-  transform: translateY(-3px) rotate(90deg); /* Add rotation for distinctive effect */
-  box-shadow: 0 6px 15px rgba(191, 161, 112, 0.4); /* Golden glow */
-  border-color: #ffffff; /* White border on hover */
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+  transform: translateY(-5px);
 }
 
 @media (max-width: 768px) {
   .top-button {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     bottom: 1.5rem;
     right: 1.5rem;
   }

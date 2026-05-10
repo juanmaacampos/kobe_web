@@ -14,7 +14,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: clamp(1rem, 2.8vw, 1.6rem);
-  border-radius: 20px;
+  border-radius: 0;
   border: 1px solid color-mix(in srgb, var(--surface-border, rgba(255,255,255,0.14)) 74%, transparent);
   border-top-color: color-mix(in srgb, var(--surface-border, rgba(255,255,255,0.14)) 36%, transparent);
   background:
@@ -27,7 +27,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: inherit;
+  border-radius: 0;
   z-index: -1;
   pointer-events: none;
   background:
@@ -47,12 +47,12 @@
   align-items: center;
   gap: .45rem;
   padding: .3rem .75rem;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid var(--surface-border, rgba(255,255,255,0.14));
   background: var(--surface-soft, rgba(255,255,255,0.04));
   color: var(--color-accent);
   font-size: .85rem;
-  font-weight: 600;
+  font-weight: 300;
 }
 
 .reviews__title {
@@ -75,9 +75,9 @@
 }
 
 .review-card {
-  border-radius: 14px;
+  border-radius: 0;
   padding: 1rem;
-  background: var(--surface-card, rgba(28, 54, 32, 0.75));
+  background: var(--surface-card, rgba(24, 24, 27, 0.75));
   border: 1px solid var(--surface-border, rgba(255,255,255,0.12));
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -93,7 +93,7 @@
 .review-card__avatar {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: 0;
   object-fit: cover;
   border: 1px solid var(--surface-border, rgba(255,255,255,0.14));
   background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
@@ -104,10 +104,10 @@
   align-items: center;
   justify-content: center;
   font-size: .9rem;
-  font-weight: 700;
+  font-weight: 300;
   letter-spacing: .03em;
   color: var(--color-accent);
-  background: color-mix(in srgb, var(--color-accent) 14%, var(--surface-card, rgba(18,41,31,0.75)));
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--surface-card, rgba(24,24,27,0.75)));
   flex-shrink: 0;
   user-select: none;
 }
@@ -132,7 +132,7 @@
 }
 
 .review-card__author {
-  font-weight: 600;
+  font-weight: 300;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
@@ -161,12 +161,12 @@
   align-items: center;
   gap: .45rem;
   padding: .5rem 1.2rem;
-  border-radius: 999px;
+  border-radius: 0;
   border: 1px solid var(--surface-border, rgba(255,255,255,0.18));
   background: var(--surface-soft, rgba(255,255,255,0.05));
   color: var(--color-accent);
   font-size: .9rem;
-  font-weight: 600;
+  font-weight: 300;
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s;
 }

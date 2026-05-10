@@ -1,12 +1,12 @@
 /* Design tokens — Kobe Sushi */
 :root {
-	--color-accent: #FACC15;
+	--color-accent: #f6e3a8;
 	--color-accent-hover: #991B1B;
 	--color-bg: #18181B;
 	--color-text: #F9FAFB;
 	--surface-card: rgba(24, 24, 27, 0.82);
-	--surface-soft: rgba(250, 204, 21, 0.04);
-	--surface-border: rgba(250, 204, 21, 0.14);
+	--surface-soft: rgba(246, 227, 168, 0.04);
+	--surface-border: rgba(246, 227, 168, 0.14);
 	--text-muted: rgba(249, 250, 251, 0.72);
 	--font-heading: 'PPEiko', 'PP Eiko', serif;
 	--font-body: 'Montserrat', sans-serif;
@@ -41,7 +41,7 @@ button { font: inherit; }
 	z-index: 80;
 	pointer-events: none;
 	padding: 4px 10px;
-	border-radius: 999px;
+	border-radius: 0.25rem;
 	font-size: 0.72rem;
 	letter-spacing: 0.04em;
 	font-weight: 600;

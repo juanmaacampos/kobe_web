@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import GrooveLogo from '../../assets/img/kobe_logo_white.webp';
 import HeaderBg from '../../components/headerBg/HeaderBg.jsx';
 import MenuSlider from '../../components/menuSlider/MenuSlider.jsx';
-import Typewriter from '../../components/Typewriter/Typewriter.jsx';
 import './header.css';
 
 export const Header = ({ onSelect, onSlideChange }) => {
-  // Trigger entrance animations once mounted
   const [entered, setEntered] = useState(false);
   useEffect(() => {
     const id = requestAnimationFrame(() => setEntered(true));
@@ -16,43 +14,26 @@ export const Header = ({ onSelect, onSlideChange }) => {
   return (
     <header className="site-header" data-entered={entered ? 'true' : 'false'}>
       <HeaderBg />
+      
       <div className="header-inner">
         <div className="logo-wrapper">
           <img src={GrooveLogo} alt="Kobe Sushi" className="logo" />
         </div>
-        <h2 className="header-title header-title--stack" aria-live="polite">
-          <span className="header-title__top">
-            Noches de
-          </span>
-          <span className="header-title__bottom">
-            <Typewriter
-              prefix=""
-              words={[
-                'sushi',
-                'sake',
-                'cocteles',
-                'tapeos',
-                'experiencias',
-              ]}
-            />
-          </span>
+
+        <h2 className="header-subtitle">
+          Nuestro Menú
+          <svg className="header-subtitle-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
         </h2>
-        <MenuSlider onSelect={onSelect} onSlideChange={onSlideChange} />
+
+        <div className="header-content-area">
+          <MenuSlider onSelect={onSelect} onSlideChange={onSlideChange} />
+        </div>
       </div>
 
-      {/* CTA inferior */}
-      <a href="#nosotros" className="scroll-cue" aria-label="¿Querés saber más de nosotros?">
-        <span className="text">
-          Descubrí la experiencia Kobe
-        </span>
-        <span className="arrow" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" focusable="false" aria-hidden="true">
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </span>
-      </a>
     </header>
   );
 };
-
 export default Header;

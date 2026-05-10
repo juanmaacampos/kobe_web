@@ -1,210 +1,87 @@
-/* Centered Carousel with Depth Effect */
-.menu-carousel {
-  position: relative;
+.menu-list-container {
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  min-height: 260px;
-  overflow: hidden; /* Hide slides on mobile */
+  max-width: 1200px;
+  margin: 0.5rem auto 4rem;
+  padding: 0 5vw 2rem 5vw;
   z-index: 2;
-  padding-bottom: 32px; /* space for dots */
-}
-
-@media (min-width: 768px) {
-  .menu-carousel {
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    overflow-y: visible; /* Allow blur effect to show vertically on desktop */
-  }
-}
-
-/* Navigation buttons - only visible on desktop */
-.carousel-nav-btn {
-  position: absolute;
-  top: 44%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 192, 123, 0.3);
-  background: rgba(28, 54, 32, 0.85);
-  color: var(--color-accent);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.carousel-nav-btn:hover:not(:disabled) {
-  background: rgba(24, 24, 27, 0.95);
-  border-color: var(--color-accent);
-  transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-  color: #fff;
-}
-
-.carousel-nav-btn:active:not(:disabled) {
-  transform: translateY(-50%) scale(0.95);
-}
-
-.carousel-nav-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.carousel-nav-btn--prev {
-  left: 8px;
-}
-
-.carousel-nav-btn--next {
-  right: 8px;
-}
-
-.carousel-nav-btn svg {
-  width: 22px;
-  height: 22px;
-  transition: transform 0.2s ease;
-}
-
-.carousel-nav-btn:hover:not(:disabled) svg {
-  transform: scale(1.1);
-}
-
-.carousel-track {
-  display: flex;
-  align-items: flex-start; /* align tops so tall cards don't get cropped */
   position: relative;
-  left: 0;
-  will-change: transform;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  touch-action: pan-y; /* Allow vertical scroll, prevent horizontal */
-  padding-top: 12px;
+  
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  gap: 1.5rem;
 }
 
-.carousel-slide {
-  flex-shrink: 0; /* Prevent slides from shrinking */
-  width: 280px; /* Fixed width for each slide */
-  max-width: 80vw;
-  margin: 0 20px; /* Spacing between slides */
-  opacity: 0.5;
-  transform: scale(0.8);
-  filter: blur(3px);
-  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+/* Hide scrollbar for cleaner look */
+.menu-list-container::-webkit-scrollbar {
+  height: 4px;
+}
+.menu-list-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+.menu-list-container::-webkit-scrollbar-thumb {
+  background: rgba(246, 227, 168, 0.3);
+  border-radius: 0;
 }
 
-.carousel-slide.active {
-  opacity: 1;
-  transform: scale(1);
-  filter: blur(0);
-}
-
-/* Dots */
-.carousel-dots {
+.carousel-loading, .carousel-error {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-  position: relative;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.dot.active {
-  background: var(--color-accent);
-  transform: scale(1.2);
-}
-
-@media (min-width: 640px) {
-  .carousel-slide {
-    width: 320px;
-  }
-}
-
-/* Show navigation buttons on desktop */
-@media (min-width: 768px) {
-  .carousel-nav-btn {
-    top: calc(50% - 16px); /* offset dots area */
-    width: 56px;
-    height: 56px;
-  }
-
-  .carousel-nav-btn svg {
-    width: 28px;
-    height: 28px;
-  }
-  
-  /* Adjust carousel to accommodate buttons without cutting content */
-  .menu-carousel {
-    margin: 0 100px; /* Space for buttons */
-    overflow: visible; /* Allow blurred slides to show */
-  }
-  
-  /* Position buttons outside the carousel area */
-  .carousel-nav-btn--prev {
-    left: -80px;
-  }
-  
-  .carousel-nav-btn--next {
-    right: -80px;
-  }
-}
-
-/* For larger screens, give more space */
-@media (min-width: 1024px) {
-  .menu-carousel {
-    margin: 0 120px;
-  }
-  
-  .carousel-nav-btn--prev {
-    left: -90px;
-  }
-  
-  .carousel-nav-btn--next {
-    right: -90px;
-  }
-}
-
-/* Loading y Error States */
-.carousel-loading,
-.carousel-error {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  height: 200px;
+  min-height: 200px;
+  width: 100%;
   color: var(--color-text);
-  text-align: center;
-}
-
-.carousel-error p {
   font-family: var(--font-body);
-  font-size: 1rem;
-  opacity: 0.8;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
 }
 
-/* Simple Page Loader */
 .simple-loader {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top: 3px solid var(--color-accent, #ff6b6b);
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Swipe Indicator */
+.slider-swipe-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  opacity: 0.7;
+  margin-top: -2rem;
+  margin-bottom: 2rem;
+  animation: pulseHorizontal 2s infinite ease-in-out;
+}
+
+.slider-swipe-indicator svg {
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes pulseHorizontal {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+@media (min-width: 768px) {
+  .slider-swipe-indicator {
+    display: none; /* Only show on mobile */
+  }
 }
