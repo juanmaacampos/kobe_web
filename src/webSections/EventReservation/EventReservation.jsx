@@ -4,29 +4,15 @@ import { useBusinessContact } from '../../hooks/useBusinessContact.js';
 import { buildEventReservationMessage, buildWhatsAppLink } from '../../utils/whatsapp.js';
 import './eventReservation.css';
 
-const EVENT_TYPES = ['Cumpleaños', 'Casamiento', 'Evento empresarial', 'Almuerzo ejecutivo', 'Brunch', 'Reunión social', 'After office', 'Otro'];
-const RESERVATION_MODES = {
-  table: 'Reserva de mesa',
-  private: 'Evento Privado',
-};
+
 
 const EventReservation = () => {
-  const [reservationMode, setReservationMode] = useState('table');
   const [guestCount, setGuestCount] = useState('');
   const [reservationTime, setReservationTime] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const { contactPhone, whatsAppHref, isInitialized } = useBusinessContact();
 
-  const isTableReservation = reservationMode === 'table';
-  const guestMax = isTableReservation ? 10 : 200;
-
-  const handleReservationModeChange = (mode) => {
-    setReservationMode(mode);
-
-    if (mode === 'table' && guestCount && Number(guestCount) > 10) {
-      setGuestCount('10');
-    }
-  };
+  const guestMax = 10;
 
   const handleGuestCountChange = (event) => {
     const nextValue = event.target.value;
@@ -48,12 +34,12 @@ const EventReservation = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const reservationData = {
-      reservationMode,
+      reservationMode: 'table',
       fullName: formData.get('fullName')?.toString().trim(),
       phone: formData.get('phone')?.toString().trim(),
-      eventType: isTableReservation ? '' : formData.get('eventType')?.toString().trim(),
+      eventType: '',
       eventDate: formData.get('eventDate')?.toString().trim(),
-      eventTime: isTableReservation ? formData.get('eventTime')?.toString().trim() : '',
+      eventTime: formData.get('eventTime')?.toString().trim(),
       guests: formData.get('guests')?.toString().trim(),
       message: formData.get('message')?.toString().trim(),
     };
@@ -76,24 +62,6 @@ const EventReservation = () => {
         <div className="event-reservation__card">
           {!submitted ? (
             <form className="event-form" onSubmit={handleSubmit}>
-              <div className="event-form__mode-switch" role="tablist" aria-label="Tipo de solicitud">
-                {Object.entries(RESERVATION_MODES).map(([mode, label]) => {
-                  const isActive = reservationMode === mode;
-
-                  return (
-                    <button
-                      key={mode}
-                      type="button"
-                      className={`event-form__mode-button${isActive ? ' event-form__mode-button--active' : ''}`}
-                      onClick={() => handleReservationModeChange(mode)}
-                      aria-pressed={isActive}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-
               <div className="event-form__grid">
                 <label>
                   Nombre y apellido
@@ -105,25 +73,12 @@ const EventReservation = () => {
                   <input type="tel" name="phone" required placeholder="Ej: +54 9 11 1234-5678" autoComplete="tel" inputMode="tel" enterKeyHint="next" />
                 </label>
 
-                {!isTableReservation && (
-                  <label>
-                    Tipo de evento
-                    <select name="eventType" required defaultValue="" autoComplete="off">
-                      <option value="" disabled>Seleccionar</option>
-                      {EVENT_TYPES.map((type) => (
-                        <option key={type} value={type}>{type}</option>
-                      ))}
-                    </select>
-                  </label>
-                )}
-
                 <label>
                   Fecha estimada
                   <input type="date" name="eventDate" required enterKeyHint="next" />
                 </label>
 
-                {isTableReservation && (
-                  <label>
+                <label>
                     Hora de la reserva
                     <input
                       type="time"
@@ -134,7 +89,6 @@ const EventReservation = () => {
                       enterKeyHint="next"
                     />
                   </label>
-                )}
 
                 <label>
                   Cantidad de personas
@@ -146,7 +100,7 @@ const EventReservation = () => {
                     required
                     value={guestCount}
                     onChange={handleGuestCountChange}
-                    placeholder={isTableReservation ? 'Hasta 10 personas' : 'Ej: 30'}
+                    placeholder="Hasta 10 personas"
                     inputMode="numeric"
                     enterKeyHint="next"
                   />
@@ -158,7 +112,7 @@ const EventReservation = () => {
                 <textarea
                   name="message"
                   rows="4"
-                  placeholder={isTableReservation ? 'Si querés, agregá un comentario para tu reserva' : 'Contanos brevemente qué tipo de evento querés organizar'}
+                  placeholder="Si querés, agregá un comentario para tu reserva"
                   autoComplete="off"
                   enterKeyHint="done"
                 />
