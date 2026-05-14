@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { MdMenuBook, MdCampaign, MdEventAvailable, MdInfoOutline, MdMenu, MdClose } from 'react-icons/md';
-import GrooveLogo from '../../assets/img/kobe_logo_white.webp';
+import { MdMenuBook, MdCampaign, MdEventAvailable, MdInfoOutline, MdMenu, MdClose, MdShoppingBag } from 'react-icons/md';
+import KobeLogo from '../../assets/img/kobe_logo_white.webp';
+import { useCart } from '../../context/CartContext.jsx';
 import './navbar.css';
 
 const NAV_ITEMS = [
@@ -16,6 +17,19 @@ const SCROLL_THRESHOLD = 80;
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { totalItems, openCart } = useCart();
+  const prevItemsRef = useRef(totalItems);
+  const [bump, setBump] = useState(false);
+
+  useEffect(() => {
+    if (totalItems > prevItemsRef.current) {
+      setBump(true);
+      const t = setTimeout(() => setBump(false), 600);
+      prevItemsRef.current = totalItems;
+      return () => clearTimeout(t);
+    }
+    prevItemsRef.current = totalItems;
+  }, [totalItems]);
 
   const handleScroll = useCallback(() => {
     const isScrolled = window.scrollY > SCROLL_THRESHOLD;
@@ -52,7 +66,7 @@ const Navbar = () => {
           aria-label="Ir al inicio"
           type="button"
         >
-          <img src={GrooveLogo} alt="Kobe Sushi" className="navbar__logo" />
+          <img src={KobeLogo} alt="Kobe Sushi" className="navbar__logo" />
         </button>
 
         <div className="navbar__nav" aria-label="Secciones principales">
@@ -69,16 +83,31 @@ const Navbar = () => {
           ))}
         </div>
 
-        <button
-          className={`navbar__hamburger${menuOpen ? ' navbar__hamburger--open' : ''}`}
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={menuOpen}
-          aria-controls="navbar-drawer"
-          type="button"
-        >
-          {menuOpen ? <MdClose /> : <MdMenu />}
-        </button>
+        <div className="navbar__right">
+          <button
+            className={`navbar__cart-btn${bump ? ' navbar__cart-btn--bump' : ''}`}
+            onClick={openCart}
+            aria-label={`Pedido — ${totalItems} items`}
+            type="button"
+          >
+            <MdShoppingBag aria-hidden="true" />
+            {totalItems > 0 && (
+              <span className="navbar__cart-badge" aria-hidden="true">{totalItems}</span>
+            )}
+            <span className="navbar__cart-label">Pedido</span>
+          </button>
+
+          <button
+            className={`navbar__hamburger${menuOpen ? ' navbar__hamburger--open' : ''}`}
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={menuOpen}
+            aria-controls="navbar-drawer"
+            type="button"
+          >
+            {menuOpen ? <MdClose /> : <MdMenu />}
+          </button>
+        </div>
       </div>
 
       <div

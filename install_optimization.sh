@@ -3,12 +3,12 @@
 # 🔥 SCRIPT DE INSTALACIÓN - OPTIMIZACIÓN FIREBASE GROOVE
 # Instala y configura todas las optimizaciones automáticamente
 
-echo "🔥 Instalando optimizaciones Firebase para Groove Web..."
+echo "🔥 Instalando optimizaciones Firebase para Kobe Web..."
 echo "=================================================="
 
 # Verificar que estamos en el directorio correcto
 if [ ! -f "package.json" ] || [ ! -d "src" ]; then
-    echo "❌ Error: Ejecutar desde la raíz del proyecto groove_web"
+    echo "❌ Error: Ejecutar desde la raíz del proyecto kobe_web"
     exit 1
 fi
 
@@ -82,11 +82,11 @@ if [ ! -f "src/firebase/localConfig.js" ]; then
 
 import { FIREBASE_OPTIMIZATION_CONFIG } from './optimizationConfig.js';
 
-// Configuración específica para Groove
+// Configuración específica para Kobe
 export const GROOVE_LOCAL_CONFIG = {
   ...FIREBASE_OPTIMIZATION_CONFIG,
   
-  // Configuración recomendada para Groove
+  // Configuración recomendada para Kobe
   mode: 'BALANCED',
   
   // Ajustes específicos para restaurante
@@ -126,7 +126,7 @@ fi
 
 # Crear archivo README de optimización
 cat > OPTIMIZATION_README.md << 'EOF'
-# 🔥 Optimizaciones Firebase - Groove Web
+# 🔥 Optimizaciones Firebase - Kobe Web
 
 ## ✅ Instalación Completada
 
@@ -181,7 +181,7 @@ const { announcements } = useAnnouncementsOptimized(menuSDK, {
 - ✅ `/src/firebase/smartListener.js` - Gestión inteligente de listeners
 - ✅ `/src/firebase/useMenuOptimized.js` - Hooks optimizados
 - ✅ `/src/firebase/optimizationConfig.js` - Configuración global
-- ✅ `/src/firebase/localConfig.js` - Configuración específica Groove
+- ✅ `/src/firebase/localConfig.js` - Configuración específica Kobe
 - ✅ `/src/components/FirebaseStatsMonitor/` - Monitor de estadísticas
 - ✅ `/src/components/FirebaseConfigControl/` - Control de configuración
 
@@ -234,6 +234,6 @@ echo "1. Ejecutar 'npm run dev' para probar"
 echo "2. Añadir <FirebaseStatsMonitor /> para ver métricas"
 echo "3. Revisar OPTIMIZATION_README.md para más detalles"
 echo ""
-echo "💰 Ahorro estimado para Groove: ~$3 USD/año"
+echo "💰 Ahorro estimado para Kobe: ~$3 USD/año"
 echo ""
 echo "🔥 ¡Firebase optimizado para máxima eficiencia!"

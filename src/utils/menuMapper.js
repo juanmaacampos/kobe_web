@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
 
 /**
- * 🎯 MAPPER DE MENÚS GROOVE
- * Mapea los menús de Firebase a la estructura de menús de Groove (desayuno, almuerzo, bebidas)
+ * 🎯 MAPPER DE MENÚS KOBE
+ * Mapea los menús de Firebase a la estructura de menús de Kobe (desayuno, almuerzo, bebidas)
  */
 
 /**
- * Mapea los menús de Firebase a la estructura de menús dinámicos de Groove
+ * Mapea los menús de Firebase a la estructura de menús dinámicos de Kobe
  * @param {Array} firebaseMenus - Lista de menús obtenidos de Firebase
  * @returns {Object} - Menús mapeados con IDs como keys
  */
-export function mapFirebaseMenusToGroove(firebaseMenus) {
-  const grooveMenus = {};
+export function mapFirebaseMenusToKobe(firebaseMenus) {
+  const kobeMenus = {};
 
   // Mapear cada menú de Firebase
   firebaseMenus.forEach(menu => {
     // Usar el ID del menú como key
     const menuKey = menu.id;
     
-    grooveMenus[menuKey] = {
+    kobeMenus[menuKey] = {
       id: menu.id,
       title: menu.name, // Usar el nombre del menú
       description: menu.description || `Descubre nuestro menú ${menu.name}`, // Usar la descripción del menú
@@ -29,7 +29,7 @@ export function mapFirebaseMenusToGroove(firebaseMenus) {
     };
   });
 
-  return grooveMenus;
+  return kobeMenus;
 }
 
 /**
@@ -102,52 +102,52 @@ function getDefaultImage(categoryName) {
 }
 
 /**
- * Hook personalizado para obtener menús de Groove desde Firebase
+ * Hook personalizado para obtener menús de Kobe desde Firebase
  * @param {Object} menuSDK - Instancia del MenuSDK
  * @returns {Object} - Estado de los menús mapeados
  */
-export function useGrooveMenus(menuSDK) {
-  const [grooveMenus, setGrooveMenus] = useState({});
+export function useKobeMenus(menuSDK) {
+  const [kobeMenus, setKobeMenus] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!menuSDK) {
-      console.log('🔄 useGrooveMenus: esperando SDK...');
+      console.log('🔄 useKobeMenus: esperando SDK...');
       return;
     }
 
-    async function loadGrooveMenus() {
+    async function loadKobeMenus() {
       try {
-        console.log('🔄 useGrooveMenus: iniciando carga...');
+        console.log('🔄 useKobeMenus: iniciando carga...');
         setLoading(true);
         setError(null);
         
         // Obtener lista de menús disponibles (no categorías)
-        console.log('📋 useGrooveMenus: obteniendo lista de menús...');
+        console.log('📋 useKobeMenus: obteniendo lista de menús...');
         const firebaseMenus = await menuSDK.getFullMenu();
-        console.log('✅ useGrooveMenus: menús obtenidos:', firebaseMenus);
+        console.log('✅ useKobeMenus: menús obtenidos:', firebaseMenus);
         
-        // Mapear a la estructura de Groove
-        console.log('🎯 useGrooveMenus: mapeando menús...');
-        const mappedMenus = mapFirebaseMenusToGroove(firebaseMenus);
-        console.log('✅ useGrooveMenus: menús mapeados:', mappedMenus);
+        // Mapear a la estructura de Kobe
+        console.log('🎯 useKobeMenus: mapeando menús...');
+        const mappedMenus = mapFirebaseMenusToKobe(firebaseMenus);
+        console.log('✅ useKobeMenus: menús mapeados:', mappedMenus);
         
-        setGrooveMenus(mappedMenus);
+        setKobeMenus(mappedMenus);
       } catch (err) {
-        console.error('❌ Error loading Groove menus:', err);
+        console.error('❌ Error loading Kobe menus:', err);
         setError(err.message);
       } finally {
         setLoading(false);
-        console.log('🏁 useGrooveMenus: carga finalizada');
+        console.log('🏁 useKobeMenus: carga finalizada');
       }
     }
 
-    loadGrooveMenus();
+    loadKobeMenus();
   }, [menuSDK]);
 
   return {
-    grooveMenus,
+    kobeMenus,
     loading,
     error
   };
@@ -179,7 +179,7 @@ export function useMenuCategories(menuSDK, menuId) {
         const menuCategories = await menuSDK.getMenuById(menuId);
         console.log('✅ useMenuCategories: categorías obtenidas:', menuCategories);
         
-        // Mapear items a la estructura de Groove
+        // Mapear items a la estructura de Kobe
         const mappedCategories = menuCategories.map(category => ({
           ...category,
           items: category.items.map(item => ({
@@ -214,4 +214,4 @@ export function useMenuCategories(menuSDK, menuId) {
   };
 }
 
-export default mapFirebaseMenusToGroove;
+export default mapFirebaseMenusToKobe;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import GrooveLogo from '../../assets/img/kobe_logo_white.webp';
+import KobeLogo from '../../assets/img/kobe_logo_white.webp';
 import HeaderBg from '../../components/headerBg/HeaderBg.jsx';
 import MenuSlider from '../../components/menuSlider/MenuSlider.jsx';
 import './header.css';
@@ -17,7 +17,7 @@ export const Header = ({ onSelect, onSlideChange }) => {
       
       <div className="header-inner">
         <div className="logo-wrapper">
-          <img src={GrooveLogo} alt="Kobe Sushi" className="logo" />
+          <img src={KobeLogo} alt="Kobe Sushi" className="logo" />
         </div>
 
         <h2 className="header-subtitle">
@@ -33,6 +33,13 @@ export const Header = ({ onSelect, onSlideChange }) => {
         </div>
       </div>
 
+      <div className="scroll-cue">
+        <span className="text">Reservas, horarios y más</span>
+        <svg className="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <polyline points="5 12 12 19 19 12" />
+        </svg>
+      </div>
     </header>
   );
 };

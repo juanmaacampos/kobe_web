@@ -3,7 +3,7 @@ import { createMenuSDK } from './menuSDK';
 import { MENU_CONFIG } from './config';
 
 /**
- * 🔥 CONTEXTO DE FIREBASE PARA GROOVE
+ * 🔥 CONTEXTO DE FIREBASE PARA KOBE
  * Proveedor global del SDK de menús para toda la aplicación
  */
 

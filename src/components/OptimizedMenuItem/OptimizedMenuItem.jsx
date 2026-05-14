@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
+import { MdAddShoppingCart, MdCheck } from 'react-icons/md';
 import { useLazyImage } from '../hooks/useMenuOptimization.js';
+import { useCart } from '../../context/CartContext.jsx';
 import kobeLogo from '../../assets/img/kobe_logo_white.webp';
 
 /**
@@ -19,6 +21,8 @@ const OptimizedMenuItem = memo(({
     item.img, 
     kobeLogo
   );
+  const { addItem, items } = useCart();
+  const inCart = items.some((i) => i.id === item.id);
 
   // Configuración de tamaños de imagen
   const imageSizes = {
@@ -80,6 +84,18 @@ const OptimizedMenuItem = memo(({
             )}
           </div>
         )}
+
+        <div className="md-item-cart-row">
+          <button
+            className={`md-item-add-btn${inCart ? ' md-item-add-btn--added' : ''}`}
+            onClick={() => addItem({ id: item.id, name: item.name, price: item.price, img: item.img || null })}
+            type="button"
+            aria-label={`Agregar ${item.name} al carrito`}
+          >
+            {inCart ? <MdCheck aria-hidden="true" /> : <MdAddShoppingCart aria-hidden="true" />}
+            <span>{inCart ? 'Agregado' : 'Agregar'}</span>
+          </button>
+        </div>
       </div>
     </li>
   );

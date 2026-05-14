@@ -1,4 +1,4 @@
-# 🔥 Firebase Cost Optimization Plan - Groove Web
+# 🔥 Firebase Cost Optimization Plan - Kobe Web
 
 ## ✅ **OPTIMIZACIONES IMPLEMENTADAS PARA REDUCIR CUOTA FIREBASE**
 
@@ -168,7 +168,7 @@ console.log('✅ MenuSDK: menús activos obtenidos:', activeMenus);
 - ⚡ **Balance costo/funcionalidad**
 - 🔄 **Tiempo real inteligente**
 - 💾 **Cache de 10 minutos**
-- ✅ **Recomendado para Groove**
+- ✅ **Recomendado para Kobe**
 
 ### **Modo TIEMPO REAL (50% reducción)**
 ```javascript
@@ -201,7 +201,7 @@ console.log('✅ MenuSDK: menús activos obtenidos:', activeMenus);
 
 ---
 
-## 🎛️ **Configuración Recomendada para Groove:**
+## 🎛️ **Configuración Recomendada para Kobe:**
 
 ```javascript
 // En App.jsx
@@ -223,7 +223,7 @@ const { announcements } = useAnnouncementsOptimized(menuSDK, {
 
 ## 💰 **Estimación de Ahorro Mensual:**
 
-### **Uso Típico de Groove:**
+### **Uso Típico de Kobe:**
 - **Visitantes diarios:** ~200
 - **Lecturas por visita (ANTES):** ~15
 - **Lecturas por visita (DESPUÉS):** ~3
@@ -298,4 +298,4 @@ import FirebaseConfigControl from './components/FirebaseConfigControl/FirebaseCo
 
 ---
 
-**¡Optimización Firebase para Groove completada! 🎉**
+**¡Optimización Firebase para Kobe completada! 🎉**

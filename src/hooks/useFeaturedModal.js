@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const MODAL_STORAGE_KEY = 'groove_featured_modal_shown';
+const MODAL_STORAGE_KEY = 'kobe_featured_modal_shown';
 
 /**
  * Custom hook to manage the featured announcement modal

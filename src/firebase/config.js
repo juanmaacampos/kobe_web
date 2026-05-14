@@ -1,5 +1,5 @@
 /**
- * CONFIGURACIÓN PARA MÚLTIPLES MENÚS GROOVE
+ * CONFIGURACIÓN PARA MÚLTIPLES MENÚS KOBE
  * Un solo negocio puede tener múltiples menús (ej: Almuerzo, Cena, Bebidas)
  */
 
@@ -14,7 +14,7 @@ export const MENU_CONFIG = {
     appId: import.meta.env.VITE_FIREBASE_APP_ID
   },
 
-  //ID del Negocio Principal - Groove
+  //ID del Negocio Principal - Kobe
   businessId: import.meta.env.VITE_FIREBASE_BUSINESS_ID,
   
   // Configuración para Múltiples Menús
@@ -40,7 +40,7 @@ export const MENU_CONFIG = {
     allowMixedMenus: true // Permitir productos de diferentes menús en el carrito
   },
 
-  //Terminología Adaptativa - Para Groove (restaurante/café)
+  //Terminología Adaptativa - Para Kobe (restaurante/café)
   terminology: {
     business: {
       restaurant: {

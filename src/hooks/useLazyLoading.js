@@ -74,7 +74,7 @@ export function useMenuCategoriesLazy(menuSDK, menuId) {
       // Cargar items de la categoría específica
       const categoryItems = await menuSDK.getCategoryItems(menuId, categoryId);
       
-      // Mapear items al formato Groove
+      // Mapear items al formato Kobe
       const mappedItems = categoryItems.map(item => ({
         id: item.id,
         name: item.name,
@@ -176,14 +176,14 @@ function formatPrice(price) {
 export function useSmartCategoryExpansion(categories, loadCategoryItems, menuType) {
   const [expandedCategories, setExpandedCategories] = useState(() => {
     // Recuperar del localStorage
-    const saved = localStorage.getItem(`groove-expanded-${menuType}`);
+    const saved = localStorage.getItem(`kobe-expanded-${menuType}`);
     return saved ? new Set(JSON.parse(saved)) : new Set();
   });
 
   // Guardar en localStorage cuando cambie
   useEffect(() => {
     localStorage.setItem(
-      `groove-expanded-${menuType}`, 
+      `kobe-expanded-${menuType}`, 
       JSON.stringify([...expandedCategories])
     );
   }, [expandedCategories, menuType]);

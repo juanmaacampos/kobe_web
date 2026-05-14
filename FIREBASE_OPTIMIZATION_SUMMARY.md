@@ -75,7 +75,7 @@ src/webSections/bodyAds/       # Optimización aplicada
 ```
 - ⚡ **Balance perfecto** costo/funcionalidad
 - 🔄 **Tiempo real inteligente**
-- 🏪 **Perfecto para Groove**
+- 🏪 **Perfecto para Kobe**
 
 ### 3. **REALTIME (50% reducción)**
 ```javascript
@@ -93,7 +93,7 @@ src/webSections/bodyAds/       # Optimización aplicada
 
 ## 💰 **ESTIMACIÓN DE AHORRO REAL**
 
-### **Para Groove (200 visitas/día):**
+### **Para Kobe (200 visitas/día):**
 ```
 Lecturas ANTES:    15 × 200 × 30 = 90,000/mes
 Lecturas DESPUÉS:   3 × 200 × 30 = 18,000/mes
@@ -305,4 +305,4 @@ function App() {
 
 **🎯 MISIÓN CUMPLIDA: Firebase optimizado para máxima eficiencia con funcionalidad completa! 🚀**
 
-*Ahorro estimado para Groove: 80% menos lecturas Firebase = ~$3 USD/año*
+*Ahorro estimado para Kobe: 80% menos lecturas Firebase = ~$3 USD/año*

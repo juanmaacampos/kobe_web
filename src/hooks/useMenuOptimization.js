@@ -166,14 +166,14 @@ export function useViewportOptimization() {
 export function useCategoryExpansion(menuType) {
   const [expandedCategories, setExpandedCategories] = useState(() => {
     // Recuperar estado del localStorage
-    const saved = localStorage.getItem(`groove-expanded-${menuType}`);
+    const saved = localStorage.getItem(`kobe-expanded-${menuType}`);
     return saved ? JSON.parse(saved) : new Set();
   });
 
   // Guardar estado en localStorage
   useEffect(() => {
     localStorage.setItem(
-      `groove-expanded-${menuType}`, 
+      `kobe-expanded-${menuType}`, 
       JSON.stringify([...expandedCategories])
     );
   }, [expandedCategories, menuType]);

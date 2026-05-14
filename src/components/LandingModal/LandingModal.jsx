@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { MdOutlineRestaurantMenu, MdOutlineNotifications, MdOutlineStarBorder, MdOutlineCalendarToday, MdOutlineInfo } from 'react-icons/md';
-import GrooveLogo from '../../assets/img/kobe_logo_white.webp';
+import KobeLogo from '../../assets/img/kobe_logo_white.webp';
 import HeaderBg from '../headerBg/HeaderBg.jsx';
 import './landingModal.css';
 
@@ -39,7 +39,7 @@ const LandingModal = ({ open, onClose }) => {
     <div className="landing-modal" role="dialog" aria-modal="true" aria-label="Menú de inicio">
       <HeaderBg />
       <div className="landing-modal__inner">
-        <img src={GrooveLogo} alt="Kobe Sushi" className="landing-modal__logo" />
+        <img src={KobeLogo} alt="Kobe Sushi" className="landing-modal__logo" />
         
         <nav className="landing-modal__nav" aria-label="Secciones principales">
           {NAV_ITEMS.map(({ label, target, icon }) => (

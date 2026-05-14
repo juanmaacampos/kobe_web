@@ -155,8 +155,8 @@ export const calculateSavingsEstimate = (mode = 'BALANCED') => {
  */
 export const getActiveConfig = () => {
   // Intentar obtener configuración personalizada
-  if (typeof window !== 'undefined' && window.grooveFirebaseConfig) {
-    return { ...FIREBASE_OPTIMIZATION_CONFIG, ...window.grooveFirebaseConfig };
+  if (typeof window !== 'undefined' && window.kobeFirebaseConfig) {
+    return { ...FIREBASE_OPTIMIZATION_CONFIG, ...window.kobeFirebaseConfig };
   }
   
   // Usar configuración del preset

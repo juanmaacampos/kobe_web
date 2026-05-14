@@ -15,9 +15,11 @@ import LandingModal from './components/LandingModal/LandingModal.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import { useFirebase } from './firebase/FirebaseProvider.jsx';
 import { useBusinessInfo } from './firebase/useMenu.js';
+import { CartProvider } from './context/CartContext.jsx';
+import Cart from './components/Cart/Cart.jsx';
 
 function App() {
-  const [selectedMenu, setSelectedMenu] = useState(null);
+  const [selectedMenu, setSelectedMenu] = useState('sushis');
   const [activeSlide, setActiveSlide] = useState(null);
   const [manualClickKey, setManualClickKey] = useState(0);
   
@@ -27,15 +29,17 @@ function App() {
   };
   
   return (
-    <FirebaseProvider>
-      <AppContent 
-        onSelectMenu={handleManualSelection} 
-        selectedMenu={selectedMenu}
-        onSlideChange={setActiveSlide}
-        activeSlide={activeSlide}
-        manualClickKey={manualClickKey}
-      />
-    </FirebaseProvider>
+    <CartProvider>
+      <FirebaseProvider>
+        <AppContent 
+          onSelectMenu={handleManualSelection} 
+          selectedMenu={selectedMenu}
+          onSlideChange={setActiveSlide}
+          activeSlide={activeSlide}
+          manualClickKey={manualClickKey}
+        />
+      </FirebaseProvider>
+    </CartProvider>
   );
 }
 
@@ -81,6 +85,7 @@ function AppContent({ onSelectMenu, selectedMenu, onSlideChange, activeSlide, ma
       />
 
       <TopButton />
+      <Cart />
 
     </div>
   );

@@ -46,8 +46,17 @@
 	}
 }
 
-/* Optional section title (hidden for now) */
-.highlights-grid__title { display:none; }
+/* Optional section title */
+.highlights-grid__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 400;
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+  margin: 0 0 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
 /* spacing from header */
 .highlights-grid { margin-top: clamp(1rem, 3vw, 1.5rem); }

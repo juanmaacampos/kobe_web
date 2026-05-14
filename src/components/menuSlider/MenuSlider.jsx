@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import MenuCard from '../menuCard/MenuCard.jsx';
 import { useFirebase } from '../../firebase/FirebaseProvider.jsx';
-import { useGrooveMenus } from '../../utils/menuMapper.js';
+import { useKobeMenus } from '../../utils/menuMapper.js';
+import { USE_STATIC_MENU, STATIC_MENU_GROUPS } from '../../data/menu.js';
 import './menuSlider.css';
 
 const PRIORITY_TITLES = {
@@ -14,8 +15,28 @@ const normalizeMenuTitle = (value = '') =>
 
 export const MenuSlider = ({ onSelect, onSlideChange, mode = 'bar' }) => {
   const { menuSDK, isInitialized } = useFirebase();
-  const { grooveMenus, loading, error } = useGrooveMenus(menuSDK);
-  const keys = Object.keys(grooveMenus);
+  const { kobeMenus, loading, error } = useKobeMenus(menuSDK);
+
+  // ── Modo estático ────────────────────────────────────────────────────────
+  if (USE_STATIC_MENU) {
+    return (
+      <div className="menu-list-container">
+        {Object.entries(STATIC_MENU_GROUPS).map(([key, group], index) => (
+          <MenuCard
+            key={key}
+            type={key}
+            index={index + 1}
+            menuData={{ title: group.title, description: group.desc }}
+            onMore={() => onSelect && onSelect(key)}
+            isPriority={index === 0}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  // ── Modo Firebase ────────────────────────────────────────────────────────
+  const keys = Object.keys(kobeMenus);
   const priorityTitles = mode === 'day' ? PRIORITY_TITLES.day : PRIORITY_TITLES.bar;
 
   const orderedKeys = useMemo(() => {
@@ -26,7 +47,7 @@ export const MenuSlider = ({ onSelect, onSlideChange, mode = 'bar' }) => {
 
     normalizedPriorities.forEach((normalizedPt) => {
       const matchedKey = keys.find((key) => {
-        const menuTitle = grooveMenus[key]?.title || key;
+        const menuTitle = kobeMenus[key]?.title || key;
         const normalizedTitle = normalizeMenuTitle(menuTitle);
         return normalizedTitle.includes(normalizedPt) || normalizedPt.includes(normalizedTitle);
       });
@@ -38,7 +59,7 @@ export const MenuSlider = ({ onSelect, onSlideChange, mode = 'bar' }) => {
 
     const others = keys.filter((key) => !prioritizedSet.has(key));
     return [...prioritized, ...others];
-  }, [keys, grooveMenus, priorityTitles]);
+  }, [keys, kobeMenus, priorityTitles]);
 
   if (!isInitialized || loading) {
     return <div className="menu-list-container"><div className="carousel-loading"><div className="simple-loader"></div></div></div>;
@@ -51,7 +72,7 @@ export const MenuSlider = ({ onSelect, onSlideChange, mode = 'bar' }) => {
   return (
     <div className="menu-list-container">
         {orderedKeys.map((key, index) => {
-          const menuTitle = grooveMenus[key]?.title || key;
+          const menuTitle = kobeMenus[key]?.title || key;
           const isPriority = priorityTitles.some((pt) => {
             const nt = normalizeMenuTitle(menuTitle);
             const npt = normalizeMenuTitle(pt);
@@ -63,7 +84,7 @@ export const MenuSlider = ({ onSelect, onSlideChange, mode = 'bar' }) => {
               key={key}
               type={key}
               index={index + 1}
-              menuData={grooveMenus[key]}
+              menuData={kobeMenus[key]}
               onMore={() => onSelect && onSelect(key)}
               isPriority={isPriority}
             />

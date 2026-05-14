@@ -1,5 +1,5 @@
 import React from 'react';
-import GrooveLogo from '../../assets/img/kobe_logo_white.webp';
+import KobeLogo from '../../assets/img/kobe_logo_white.webp';
 import JMCDEVLogo from '../../assets/img/jmcdev_logo.webp';
 import './footer.css';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="footer-divider" aria-hidden="true" />
       <div className="footer-inner">
         <div className="footer-brand">
-          <img src={GrooveLogo} alt="Kobe Sushi" className="footer-logo" />
+          <img src={KobeLogo} alt="Kobe Sushi" className="footer-logo" />
           <p className="footer-tagline">Sushi & Experiencias</p>
         </div>
 

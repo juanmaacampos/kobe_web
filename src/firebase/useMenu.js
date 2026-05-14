@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 /**
- * 🍽️ HOOKS PARA GROOVE - Gestión de menús con Firebase
+ * 🍽️ HOOKS PARA KOBE - Gestión de menús con Firebase
  */
 
 export function useBusinessInfo(menuSDK, options = {}) {
@@ -291,7 +291,7 @@ export function useBusinessTerminology(businessType) {
         };
       }
 
-      // Default: restaurant terminology para Groove
+      // Default: restaurant terminology para Kobe
       return {
         businessName: 'Restaurante',
         menuName: 'menú',

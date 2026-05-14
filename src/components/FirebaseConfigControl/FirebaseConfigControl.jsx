@@ -15,7 +15,7 @@ const FirebaseConfigControl = () => {
 
   // Cargar configuración desde localStorage
   useEffect(() => {
-    const savedConfig = localStorage.getItem('groove-firebase-config');
+    const savedConfig = localStorage.getItem('kobe-firebase-config');
     if (savedConfig) {
       try {
         setConfig({...config, ...JSON.parse(savedConfig)});
@@ -28,13 +28,13 @@ const FirebaseConfigControl = () => {
   // Guardar configuración
   const saveConfig = (newConfig) => {
     setConfig(newConfig);
-    localStorage.setItem('groove-firebase-config', JSON.stringify(newConfig));
+    localStorage.setItem('kobe-firebase-config', JSON.stringify(newConfig));
     
     // Aplicar cambios dinámicamente
-    window.grooveFirebaseConfig = newConfig;
+    window.kobeFirebaseConfig = newConfig;
     
     // Forzar refresh de componentes si es necesario
-    window.dispatchEvent(new CustomEvent('groove-config-change', {
+    window.dispatchEvent(new CustomEvent('kobe-config-change', {
       detail: newConfig
     }));
   };

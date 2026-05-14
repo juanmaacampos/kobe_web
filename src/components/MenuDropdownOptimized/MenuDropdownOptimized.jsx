@@ -1,9 +1,12 @@
 import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { MdAddShoppingCart, MdCheck } from 'react-icons/md';
 import { useFirebase } from '../../firebase/FirebaseProvider.jsx';
-import { useGrooveMenus } from '../../utils/menuMapper.js';
+import { useKobeMenus } from '../../utils/menuMapper.js';
 import { useMenuCategoriesLazy, useSmartCategoryExpansion } from '../../hooks/useLazyLoading.js';
 import Modal from '../../components/Modal/Modal.jsx';
+import { useCart } from '../../context/CartContext.jsx';
+import { STATIC_MENU, STATIC_MENU_GROUPS, USE_STATIC_MENU } from '../../data/menu.js';
 import kobeLogo from '../../assets/img/kobe_logo_white.webp';
 import './menuDropdownOptimized.css';
 
@@ -29,6 +32,7 @@ const scoreText = (text, search) => {
 
 // Componente de categoría optimizada con lazy loading
 const LazyCategory = ({ category, isOpen, isLoading, onToggle, onImageClick, searchTerm }) => {
+  const { addItem, items: cartItems, openCart } = useCart();
   const normalizedSearch = normalizeText(searchTerm.trim());
   // Solo se considera "coincidencia fuerte" si el nombre de la categoría empieza con el término o es exacto
   const categoryNameMatches = normalizedSearch && scoreText(category.name ?? '', normalizedSearch) >= 3;
@@ -140,6 +144,8 @@ const LazyCategory = ({ category, isOpen, isLoading, onToggle, onImageClick, sea
                       onError={(e) => {
                         e.target.src = kobeLogo;
                         e.target.className = 'md-item-image placeholder';
+                        e.target.style.cursor = 'default';
+                        e.target.onclick = null;
                       }}
                     />
                   </div>
@@ -162,6 +168,23 @@ const LazyCategory = ({ category, isOpen, isLoading, onToggle, onImageClick, sea
                         )}
                       </div>
                     )}
+
+                    <div className="md-item-cart-row">
+                      {(() => {
+                        const inCart = cartItems.some((c) => c.id === item.id);
+                        return (
+                          <button
+                            className={`md-item-add-btn${inCart ? ' md-item-add-btn--added' : ''}`}
+                            onClick={() => inCart ? openCart() : addItem({ id: item.id, name: item.name, price: item.price, img: item.img || null })}
+                            type="button"
+                            aria-label={inCart ? `Ver ${item.name} en el pedido` : `Agregar ${item.name} al pedido`}
+                          >
+                            {inCart ? <MdCheck aria-hidden="true" /> : <MdAddShoppingCart aria-hidden="true" />}
+                            <span>{inCart ? 'Ver en el pedido' : 'Agregar'}</span>
+                          </button>
+                        );
+                      })()}
+                    </div>
                   </div>
                 </li>
               ))
@@ -176,23 +199,44 @@ const LazyCategory = ({ category, isOpen, isLoading, onToggle, onImageClick, sea
 export const MenuDropdownOptimized = ({ menuType, autoScroll = true }) => {
   const sectionRef = useRef(null);
   const { menuSDK, isInitialized, error: firebaseError } = useFirebase();
-  const { grooveMenus, loading: menusLoading } = useGrooveMenus(menuSDK);
+  const { kobeMenus, loading: menusLoading } = useKobeMenus(menuSDK);
   
-  // Hook optimizado para lazy loading de categorías
+  // Hook optimizado para lazy loading de categorías (solo se usa si USE_STATIC_MENU === false)
   const { 
-    categories, 
+    categories: firebaseCategories, 
     loading: categoriesLoading, 
     error: categoriesError,
     loadCategoryItems,
     loadCategorySearchIndex
-  } = useMenuCategoriesLazy(menuSDK, menuType);
+  } = useMenuCategoriesLazy(USE_STATIC_MENU ? null : menuSDK, menuType);
   
-  // Hook para gestión inteligente de expansión
+  // Hook para gestión inteligente de expansión (solo relevante en modo Firebase)
   const { toggleCategory } = useSmartCategoryExpansion(
-    categories, 
+    USE_STATIC_MENU ? [] : firebaseCategories, 
     loadCategoryItems, 
     menuType
   );
+
+  // Categorías del menú estático filtradas por el grupo seleccionado (menuType)
+  const staticCategories = useMemo(() => {
+    const group = STATIC_MENU_GROUPS[menuType];
+    const allowedIds = group ? new Set(group.sectionIds) : null;
+    return STATIC_MENU
+      .filter(section => !allowedIds || allowedIds.has(section.id))
+      .map(section => ({
+        id: section.id,
+        name: section.name,
+        description: '',
+        items: section.items,
+        itemsLoaded: true,
+        itemCount: section.items.length,
+        loading: false,
+        error: null,
+      }));
+  }, [menuType]);
+
+  // Fuente de categorías según el modo activo
+  const categories = USE_STATIC_MENU ? staticCategories : firebaseCategories;
   
   // Estado local para controlar qué categoría está abierta (solo una a la vez)
   const [openCat, setOpenCat] = useState(null);
@@ -225,12 +269,13 @@ export const MenuDropdownOptimized = ({ menuType, autoScroll = true }) => {
 
   // Información del menú
   const menuInfo = useMemo(() => {
-    if (menusLoading || !isInitialized || !grooveMenus[menuType]) return null;
-    return grooveMenus[menuType];
-  }, [grooveMenus, menuType, menusLoading, isInitialized]);
+    if (USE_STATIC_MENU) return { title: STATIC_MENU_GROUPS[menuType]?.title || 'Menú' };
+    if (menusLoading || !isInitialized || !kobeMenus[menuType]) return null;
+    return kobeMenus[menuType];
+  }, [kobeMenus, menuType, menusLoading, isInitialized]);
 
-  // Estados de carga combinados
-  const loading = menusLoading || categoriesLoading;
+  // Estados de carga combinados (en modo estático nunca hay carga)
+  const loading = USE_STATIC_MENU ? false : (menusLoading || categoriesLoading);
 
   // Resetear categoría abierta cuando cambie el tipo de menú
   useEffect(() => {
@@ -239,10 +284,9 @@ export const MenuDropdownOptimized = ({ menuType, autoScroll = true }) => {
     setSearchTerm('');
   }, [menuType]);
 
-  // Cuando el usuario escribe en el buscador, precargar solo el índice de búsqueda
-  // (nombre + descripción) de las categorías no cargadas, con debounce para no saturar
+  // Precargar índice de búsqueda al escribir (solo en modo Firebase)
   useEffect(() => {
-    if (!searchTerm.trim() || !categories.length) return;
+    if (USE_STATIC_MENU || !searchTerm.trim() || !categories.length) return;
     const timer = setTimeout(() => {
       categories.forEach((cat) => {
         if (!cat.itemsLoaded) {
@@ -269,8 +313,8 @@ export const MenuDropdownOptimized = ({ menuType, autoScroll = true }) => {
     } else {
       // Abrir la nueva categoría (cerrando cualquier otra)
       setOpenCat(categoryId);
-      // También activar la carga de items si es necesario
-      toggleCategory(categoryId);
+      // En modo Firebase, activar la carga lazy de items
+      if (!USE_STATIC_MENU) toggleCategory(categoryId);
       
       // Scroll suave hacia la categoría que se está abriendo después de un pequeño delay
       // Este scroll siempre debe funcionar independientemente de autoScroll inicial
@@ -313,70 +357,68 @@ export const MenuDropdownOptimized = ({ menuType, autoScroll = true }) => {
     setSelectedItem(null);
   };
 
-  // Estados de carga y error
-  if (!isInitialized) {
-    return (
-      <section className="menu-dropdown">
-        <div className="md-container">
-          <div className="loading-state">
-            <div className="simple-loader"></div>
-            <p>Inicializando...</p>
+  // Estados de carga y error (solo aplican en modo Firebase)
+  if (!USE_STATIC_MENU) {
+    if (!isInitialized) {
+      return (
+        <section className="menu-dropdown">
+          <div className="md-container">
+            <div className="loading-state">
+              <div className="simple-loader"></div>
+              <p>Inicializando...</p>
+            </div>
           </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (firebaseError) {
-    return (
-      <section className="menu-dropdown">
-        <div className="md-container">
-          <div className="error-state">
-            <p>❌ Error de conexión: {firebaseError}</p>
-            <p>Por favor, intenta recargar la página.</p>
+        </section>
+      );
+    }
+    if (firebaseError) {
+      return (
+        <section className="menu-dropdown">
+          <div className="md-container">
+            <div className="error-state">
+              <p>❌ Error de conexión: {firebaseError}</p>
+              <p>Por favor, intenta recargar la página.</p>
+            </div>
           </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (loading) {
-    return (
-      <section className="menu-dropdown">
-        <div className="md-container">
-          <div className="loading-state">
-            <div className="simple-loader"></div>
-            <p>Cargando categorías...</p>
+        </section>
+      );
+    }
+    if (loading) {
+      return (
+        <section className="menu-dropdown">
+          <div className="md-container">
+            <div className="loading-state">
+              <div className="simple-loader"></div>
+              <p>Cargando categorías...</p>
+            </div>
           </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (categoriesError) {
-    return (
-      <section className="menu-dropdown">
-        <div className="md-container">
-          <div className="error-state">
-            <p>❌ Error cargando menú: {categoriesError}</p>
-            <p>Por favor, intenta nuevamente.</p>
+        </section>
+      );
+    }
+    if (categoriesError) {
+      return (
+        <section className="menu-dropdown">
+          <div className="md-container">
+            <div className="error-state">
+              <p>❌ Error cargando menú: {categoriesError}</p>
+              <p>Por favor, intenta nuevamente.</p>
+            </div>
           </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!categories || categories.length === 0) {
-    return (
-      <section className="menu-dropdown">
-        <div className="md-container">
-          <div className="empty-state">
-            <p>📭 No hay categorías disponibles en este menú.</p>
-            <p>Intenta seleccionar otro menú.</p>
+        </section>
+      );
+    }
+    if (!categories || categories.length === 0) {
+      return (
+        <section className="menu-dropdown">
+          <div className="md-container">
+            <div className="empty-state">
+              <p>📭 No hay categorías disponibles en este menú.</p>
+              <p>Intenta seleccionar otro menú.</p>
+            </div>
           </div>
-        </div>
-      </section>
-    );
+        </section>
+      );
+    }
   }
 
   return (

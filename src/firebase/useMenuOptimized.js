@@ -4,7 +4,7 @@ import { smartListenerManager } from './smartListener.js';
 import { getComponentConfig, getActiveConfig } from './optimizationConfig.js';
 
 /**
- * 🚀 HOOKS OPTIMIZADOS PARA GROOVE - Gestión eficiente de menús con Firebase
+ * 🚀 HOOKS OPTIMIZADOS PARA KOBE - Gestión eficiente de menús con Firebase
  * Reducción del 70-85% en lecturas de Firestore mediante cache inteligente
  */
 

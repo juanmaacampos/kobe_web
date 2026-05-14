@@ -73,3 +73,22 @@ export function buildEventReservationMessage({
 
   return lines.join('\n');
 }
+
+export function buildCartOrderMessage(items, orderDetails = null) {
+  if (!items || items.length === 0) return '';
+
+  const lines = [
+    '🍣 *Hola! Quiero hacer el siguiente pedido:*',
+    '',
+    ...items.map((item) => `• ${item.name} x${item.qty}  —  ${item.price}`),
+    '',
+  ];
+
+  if (orderDetails) {
+    lines.push(orderDetails, '');
+  }
+
+  lines.push('¡Gracias! 🙏');
+
+  return lines.join('\n');
+}

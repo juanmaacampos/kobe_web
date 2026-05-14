@@ -4,8 +4,8 @@ import { firebaseCache } from './cache.js';
 import { smartListenerManager } from './smartListener.js';
 
 /**
- * 🍽️ MENU SDK OPTIMIZADO PARA GROOVE - Integración con Firebase con Cache
- * SDK para conectar la web de Groove con Firebase minimizando el consumo de cuota
+ * 🍽️ MENU SDK OPTIMIZADO PARA KOBE - Integración con Firebase con Cache
+ * SDK para conectar la web de Kobe con Firebase minimizando el consumo de cuota
  */
 export class MenuSDK {
   constructor(firebaseConfig, businessId) {

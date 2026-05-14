@@ -174,6 +174,7 @@ const BodyAds = () => {
       aria-label="Conocé más sobre nosotros"
     >
       <div className="highlights-grid__inner">
+        <h2 className="highlights-grid__title">Novedades</h2>
         <div className="stack">
           {/* Anuncios de Firebase dinámicos - Mostrar todos */}
           {announcements.length > 0 && (() => {
